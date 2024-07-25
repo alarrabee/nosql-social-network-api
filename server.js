@@ -19,7 +19,7 @@ app.use(routes);
 
 //sets up server and starts listening once the connection is made
 db.once('open', () => {
-    app.listen(PORT, () => {
+    app.listen(port, () => {
       console.log(`API server running on port ${port}!`);
     });
   });
