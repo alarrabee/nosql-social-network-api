@@ -2,6 +2,7 @@ const { User, Thought } = require('../models');
 
 
 module.exports = {
+    //---USERS---//
     //GET all users
     async getUsers(req, res) {
         try {
@@ -76,7 +77,7 @@ module.exports = {
         }
     },
 
-
+    //---FRIENDS---//
     //POST to add a new friend to a user's friend list
 
 
