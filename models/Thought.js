@@ -1,4 +1,6 @@
 const { Schema, model } = require('mongoose');
+const Reaction = require('./Reaction');
+
 
 const thoughtSchema = new Schema(
     {
@@ -18,7 +20,7 @@ const thoughtSchema = new Schema(
             required: true,
             ref: 'User',
         },
-        reactions: [reactionSchema],
+        reactions: [Reaction],
     },
     {
         toJSON: {
@@ -30,12 +32,23 @@ const thoughtSchema = new Schema(
 
 
 
-//function to format the date
+//function that formats the date
+function dateFormat(timestamp) {
+    const date = new Date(timestamp);
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+}
 
-//reactionCount virtual
+
+
+//retrieves the length of the thought's `reactions` array field on query
+thoughtSchema
+  .virtual('reactionCount')
+  .get(function () {
+    return this.reactions.length;
+  });
+
 
 
 const Thought = model('thought', thoughtSchema);
-
 
 module.exports = Thought;
