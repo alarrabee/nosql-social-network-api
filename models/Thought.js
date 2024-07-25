@@ -6,18 +6,19 @@ const thoughtSchema = new Schema(
             type: String,
             required: [true, 'Your input cannot be empty. Please type something.'],
             minlength: 1,
-            maxlength: 280
+            maxlength: 280,
         },
         createdAt: {
             type: Date,
             default: Date.now,
-            get: timestamp => dateFormat(timestamp)
+            get: timestamp => dateFormat(timestamp),
         },
         username: {
             type: Schema.Types.ObjectId,
             required: true,
-            ref: 'User'
+            ref: 'User',
         },
+        reactions: [reactionSchema],
     },
     {
         toJSON: {
