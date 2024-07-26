@@ -39,6 +39,26 @@ const userSchema = new Schema(
 );
   
 
+// Add instance method to add a friend
+userSchema.methods.addFriend = async function (friendId) {
+    // Check if the user is already a friend
+    if (!this.friends.includes(friendId)) {
+        this.friends.push(friendId);
+        await this.save();
+        return this;
+    }
+};
+
+
+// Add instance method to add a friend
+userSchema.methods.deleteFriend = async function (friendId) {
+    if (this.friends.includes(friendId)) {
+        this.friends = this.friends.filter(id => !id.equals(friendId));
+        await this.save();
+    }
+    return this;
+};
+
 
 //virtual that retrieves the length of the user's `friends` array field on query
 userSchema.virtual('friendCount').get(function(){

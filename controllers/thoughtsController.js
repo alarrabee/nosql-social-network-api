@@ -44,7 +44,7 @@ module.exports = {
             }
 
             // Create the new thought with the username
-            const thought = await Thought.create({ thoughtText, username: user._id });
+            const thought = await Thought.create({ thoughtText, username });
 
             // Update the user's thoughts array with the new thought's ID
             user.thoughts.push(thoughtText);
