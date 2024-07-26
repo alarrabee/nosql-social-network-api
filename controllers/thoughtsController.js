@@ -1,4 +1,4 @@
-const { Thought } = require('../models');
+const { Thought, User } = require('../models');
 
 
 module.exports = {
@@ -32,9 +32,24 @@ module.exports = {
     //POST to create a new thought
     async createThought(req, res) {
         try {
-            const thought = await Thought.create(req.body);
-            res.json(thought);
+            // Extract username and thoughtText from request body
+            const { username, thoughtText } = req.body;
 
+            // Find the user by username
+            const user = await User.findOne({ username });
+
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+
+            // Create the new thought with the username
+            const thought = await Thought.create({ thoughtText, username: user._id });
+
+            // Update the user's thoughts array with the new thought's ID
+            user.thoughts.push(thoughtText);
+            await user.save();
+
+            res.json(thought);
         } catch (err) {
             res.status(500).json(err);
         }

@@ -16,11 +16,11 @@ const thoughtSchema = new Schema(
             get: timestamp => dateFormat(timestamp),
         },
         username: {
-            type: Schema.Types.ObjectId,
+            type: Schema.Types.String,
             required: true,
             ref: 'User',
         },
-        reactions: [Reaction],
+        reactions: [Reaction.schema],
     },
     {
         toJSON: {
