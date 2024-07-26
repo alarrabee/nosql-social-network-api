@@ -14,7 +14,7 @@ const userSchema = new Schema(
             unique: [true, 'There is already an account with this email'],
             required: [true, 'An email address is required'],
             //must match a valid email address
-            // match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+            match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
         },
         thoughts: [
             {
