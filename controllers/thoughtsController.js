@@ -16,6 +16,7 @@ module.exports = {
     //GET a single thought by its id
     async getSingleThought(req, res) {
         try {
+            // console.log('req.params.thoughtId', req.params.thoughtId); //degugging
             const thought = await Thought.findOne({ _id: req.params.thoughtId }).select('-__v');
 
             if (!thought) {
@@ -81,9 +82,11 @@ module.exports = {
             const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId });
 
             if (!thought) {
-                return res.status(404).json({ message: 'No user with that ID!' });
+                return res.status(404).json({ message: 'No thought with that ID!' });
             }
 
+            res.json({ message: 'Thought successfully deleted!' });
+            
         } catch (err) {
             res.status(500).json(err);
         }
