@@ -81,7 +81,7 @@ module.exports = {
     //---FRIENDS---//
     //POST to add a new friend to a user's friend list
     async addUserFriend(req, res) {
-        const { userId } = req.params;
+        const { userId, friendId } = req.params;
     
         try {
             const user = await User.findById(userId);
@@ -90,6 +90,7 @@ module.exports = {
                 return res.status(404).json({ message: 'No user with that ID!' });
             }
     
+            await user.addFriend(friendId);
             res.json({ message: 'Friend successfully added!' });
     
         } catch (err) {
