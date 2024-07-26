@@ -9,10 +9,11 @@ const reactionSchema = new Schema(
         reactionBody: {
             type: String,
             required: true,
+            minlength: 1,
             maxlength: 280,
         },
         username: {
-            type: Schema.Types.ObjectId,
+            type: String, //Schema.Types.String
             required: true,
             ref: 'User',
         },
