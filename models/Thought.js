@@ -32,38 +32,38 @@ const thoughtSchema = new Schema(
 
 
 
-//function that formats the date
+//function that formats the timestamp
 function dateFormat(timestamp) {
     const date = new Date(timestamp);
+
     return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
 };
 
 
 
-//add instance method to add reaction
+//instance method to add reaction
 thoughtSchema.methods.addUserReaction = async function (reactionData) {
     this.reactions.push(reactionData);
     await this.save();
+
     return this;
 };
 
 
 
-
-//add instance method to delete reaction
+//instance method to delete reaction
 thoughtSchema.methods.deleteUserReaction = async function (reactionId) {
     this.reactions = this.reactions.filter(reaction => !reaction.reactionId.equals(reactionId));
     await this.save();
+
     return this;
 };
-
 
 
 
 //virtual that retrieves the length of the thought's `reactions` array field on query
 thoughtSchema
-  .virtual('reactionCount')
-  .get(function () {
+  .virtual('reactionCount').get(function () {
     return this.reactions.length;
   });
 

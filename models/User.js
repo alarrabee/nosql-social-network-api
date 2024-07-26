@@ -1,7 +1,6 @@
 const { Schema, model } = require('mongoose');
 
 
-// Schema to create User model
 const userSchema = new Schema(
     {
         username: {
@@ -15,7 +14,7 @@ const userSchema = new Schema(
             unique: [true, 'There is already an account with this email'],
             required: [true, 'An email address is required'],
             //must match a valid email address
-            // match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+            match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
         },
         thoughts: [
             {
@@ -40,36 +39,39 @@ const userSchema = new Schema(
 );
   
 
+
 //instance method to add a friend
 userSchema.methods.addFriend = async function (friendId) {
-    // Check if the user is already a friend
+    //c if the user is already a friend
     if (!this.friends.includes(friendId)) {
         this.friends.push(friendId);
         await this.save();
+
         return this;
     }
 };
 
 
-//instance method to add a friend
+
+//instance method to remove a friend
 userSchema.methods.deleteFriend = async function (friendId) {
     if (this.friends.includes(friendId)) {
         this.friends = this.friends.filter(id => !id.equals(friendId));
+
         await this.save();
     }
     return this;
 };
 
 
-//virtual that retrieves the length of the user's `friends` array field on query
+
+//virtual that retrieves the length of the user's `friends` array
 userSchema.virtual('friendCount').get(function(){
     return this.friends.length;
 });
 
 
 
-// Initialize our User model
 const User = model('user', userSchema);
-
 
 module.exports = User;
