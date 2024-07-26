@@ -27,6 +27,12 @@ THEN I am able to successfully create and delete reactions to thoughts and add a
 ```
 
 ## Application Screenshot
+### Users
+![image](https://github.com/user-attachments/assets/13eb828a-d7e3-4992-86bb-bd12e60a6a51)
+
+### Thoughts
+![image](https://github.com/user-attachments/assets/0c217faf-3448-42f2-aabb-7e0b38669f1e)
+
 
 ## Installation Instructions
 Prerequisites
