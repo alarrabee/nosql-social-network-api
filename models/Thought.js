@@ -53,9 +53,8 @@ thoughtSchema.methods.addUserReaction = async function (reactionData) {
 
 //instance method to delete reaction
 thoughtSchema.methods.deleteUserReaction = async function (reactionId) {
-    this.reactions = this.reactions.filter(reaction => !reaction.reactionId.equals(reactionId));
+    this.reactions = this.reactions.filter(reaction => reaction._id.toString() !== reactionId);
     await this.save();
-
     return this;
 };
 
