@@ -19,7 +19,8 @@ const userSchema = new Schema(
         },
         thoughts: [
             {
-                type: String
+                type: Schema.Types.ObjectId,
+                ref: 'Thought',
             }
         ],
         friends: [
@@ -39,7 +40,7 @@ const userSchema = new Schema(
 );
   
 
-// Add instance method to add a friend
+//instance method to add a friend
 userSchema.methods.addFriend = async function (friendId) {
     // Check if the user is already a friend
     if (!this.friends.includes(friendId)) {
@@ -50,7 +51,7 @@ userSchema.methods.addFriend = async function (friendId) {
 };
 
 
-// Add instance method to add a friend
+//instance method to add a friend
 userSchema.methods.deleteFriend = async function (friendId) {
     if (this.friends.includes(friendId)) {
         this.friends = this.friends.filter(id => !id.equals(friendId));
@@ -69,5 +70,6 @@ userSchema.virtual('friendCount').get(function(){
 
 // Initialize our User model
 const User = model('user', userSchema);
+
 
 module.exports = User;
