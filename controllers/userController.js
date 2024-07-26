@@ -1,4 +1,4 @@
-const { User, Thought } = require('../models');
+const { User } = require('../models');
 
 
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
         }
     },
 
-    //GET single user by id
+    //GET single user
     async getSingleUser(req, res) {
         try {
             const user = await User.findOne({ _id: req.params.userId }).select('-__v');
@@ -21,7 +21,7 @@ module.exports = {
             if (!user) {
                 return res.status(404).json({ message: 'No user with that ID!' });
             }
-            
+
             res.json(user);
 
         } catch (err) {
@@ -29,7 +29,7 @@ module.exports = {
         }
     },
 
-    //POST to create a new user
+    //POST to create new user
     async createUser(req, res) {
         try {
             const user = await User.create(req.body);
@@ -40,7 +40,7 @@ module.exports = {
         }
     },
 
-    //PUT to update a user by its id
+    //PUT to update user
     async updateUser(req, res) {
         try {
             const user = await User.findOneAndUpdate(
@@ -110,7 +110,6 @@ module.exports = {
             }
 
             await user.deleteFriend(friendId);
-    
             res.json({ message: 'Friend successfully deleted!' });
     
         } catch (err) {

@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-
+//schema for what makes up a reaction
 const reactionSchema = new Schema(
     {
         reactionId: {
@@ -13,7 +13,7 @@ const reactionSchema = new Schema(
             maxlength: 280,
         },
         username: {
-            type: String, //Schema.Types.String
+            type: String,
             required: true,
             ref: 'User',
         },

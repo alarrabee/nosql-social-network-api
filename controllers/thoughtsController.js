@@ -13,7 +13,7 @@ module.exports = {
         }
     },
 
-    //GET a single thought by its id
+    //GET a single thought
     async getSingleThought(req, res) {
         try {
             console.log('req.params.thoughtId', req.params.thoughtId); //degugging
@@ -33,30 +33,25 @@ module.exports = {
     //POST to create a new thought
     async createThought(req, res) {
         try {
-            // Extract username and thoughtText from request body
             const { username, thoughtText } = req.body;
-
-            // Find the user by username
             const user = await User.findOne({ username });
 
             if (!user) {
                 return res.status(404).json({ message: 'User not found' });
             }
 
-            // Create the new thought with the username
-            const thought = await Thought.create({ thoughtText, username }); //thoughtText, username: user._id
-
-            // Update the user's thoughts array with the new thought's ID
+            const thought = await Thought.create({ thoughtText, username });
             user.thoughts.push(thought._id);
             await user.save();
 
             res.json(thought);
+
         } catch (err) {
             res.status(500).json(err);
         }
     },
 
-    //PUT to update a thought by its id
+    //PUT to update a thought
     async updateThought(req, res) {
         try {
             const thought = await Thought.findOneAndUpdate(
@@ -76,7 +71,7 @@ module.exports = {
         }
     },
 
-    //DELETE to remove a thought by its id
+    //DELETE to remove a thought
     async deleteThought(req, res) {
         try {
             const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId });
@@ -96,8 +91,6 @@ module.exports = {
     //---REACTIONS---//
     //POST to create a reaction
     async addUserReaction(req, res) {
-
-    
         try {
             const { thoughtId } = req.params;
             const reactionData = req.body;
@@ -109,14 +102,12 @@ module.exports = {
             }
     
             await thought.addUserReaction(reactionData);
-    
             res.json({ message: 'Reaction successfully added!'} );
     
         } catch (err) {
             res.status(500).json(err);
         }
     },
-
 
     //DELETE to remove a reaction
     async deleteUserReaction(req, res) {
@@ -129,9 +120,7 @@ module.exports = {
                 return res.status(404).json({ message: 'No thought with that ID!' });
             }
 
-            // Ensure you have a method to remove a reaction
             await thought.deleteUserReaction(reactionId);
-
             res.json({ message: 'Reaction successfully removed!' });
 
         } catch (err) {
